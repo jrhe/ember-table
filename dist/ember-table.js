@@ -1470,12 +1470,12 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
     var availableWidth, doNextLoop, nextColumnsToResize, totalSavedWidth, _results,
       _this = this;
     availableWidth = this.get('availableWidth');
-    totalSavedWidth = this._getTotalWidth(columnsToResize, 'savedWidth');
     doNextLoop = true;
     _results = [];
     while (doNextLoop) {
       doNextLoop = false;
       nextColumnsToResize = [];
+      totalSavedWidth = this._getTotalWidth(columnsToResize, 'savedWidth');
       columnsToResize.forEach(function(column) {
         var newColumnWidth;
         newColumnWidth = Math.floor((column.get('savedWidth') / totalSavedWidth) * availableWidth);

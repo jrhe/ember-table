@@ -191,11 +191,11 @@ Ember.AddeparMixins.ResizeHandlerMixin,
 
   resizeColumns: (columnsToResize) ->
     availableWidth = @get('availableWidth')
-    totalSavedWidth = @_getTotalWidth columnsToResize, 'savedWidth'
     doNextLoop = yes
     while doNextLoop
       doNextLoop = no
       nextColumnsToResize = []
+      totalSavedWidth = @_getTotalWidth columnsToResize, 'savedWidth'
       columnsToResize.forEach (column) =>
         newColumnWidth = Math.floor(
           (column.get('savedWidth') / totalSavedWidth) * availableWidth)
