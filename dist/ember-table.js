@@ -1498,7 +1498,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
   },
   doForceFillColumns: function() {
     var columnsToResize;
-    columnsToResize = this.get('tableColumns').filterProperty('canAutoResize');
+    columnsToResize = this.get('tableColumns').concat(this.get('fixedColumns')).filterProperty('canAutoResize');
     return this.resizeColumns(columnsToResize);
   },
   onBodyContentLengthDidChange: Ember.observer(function() {
