@@ -125,7 +125,7 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   styleBindings:      'width'
   row:        Ember.computed.alias 'parentView.row'
   column:     Ember.computed.alias 'content'
-  width:      Ember.computed.alias 'column.columnWidth'
+  width:      Ember.computed.alias 'column.width'
 
   init: ->
     @_super()
@@ -263,7 +263,7 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   classNameBindings:  ['column.isSortable:sortable', 'column.textAlign']
   styleBindings:      ['width', 'height']
   column:         Ember.computed.alias 'content'
-  width:          Ember.computed.alias 'column.columnWidth'
+  width:          Ember.computed.alias 'column.width'
   height: Ember.computed ->
     @get('controller._headerHeight')
   .property('controller._headerHeight')
@@ -301,13 +301,6 @@ Ember.View.extend Ember.AddeparMixins.StyleBindingsMixin,
   * @argument event jQuery event
   ###
   onColumnResize: (event, ui) ->
-    # Special case for force-filled columns: if this is the last column you
-    # resize (or the only column), then it will be reset to before the resize
-    # to preserve the table's force-fill property.
-    # TODO: Take this out of the view if possible
-    if @get('controller.forceFillColumns') and
-        @get('controller.columns').filterProperty('canAutoResize').length > 1
-      @set('column.canAutoResize', no)
     @get('column').resize(ui.size.width)
     @set 'controller.columnsFillTable', no
     @elementSizeDidChange()

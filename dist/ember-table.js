@@ -1,8 +1,3 @@
-/*!
-* ember-table v0.2.0
-* Copyright 2012-2014 Addepar Inc.
-* See LICENSE.
-*/
 (function() {
 
 var _ref;
@@ -635,17 +630,17 @@ Ember.Table.ColumnDefinition = Ember.Object.extend({
   contentPath: void 0,
   minWidth: 50,
   maxWidth: void 0,
-  defaultColumnWidth: 150,
-  columnWidth: Ember.computed.oneWay('defaultColumnWidth'),
-  savedWidth: Ember.computed.oneWay('defaultColumnWidth'),
+  savedWidth: 150,
   isResizable: true,
   isSortable: true,
   textAlign: 'text-align-right',
   canAutoResize: false,
   headerCellViewClass: 'Ember.Table.HeaderCell',
   tableCellViewClass: 'Ember.Table.TableCell',
+  width: Ember.computed.oneWay('savedWidth'),
   resize: function(width) {
-    return this.set('columnWidth', width);
+    this.set('savedWidth', width);
+    return this.set('width', width);
   },
   /**
   * Get Cell Content - This gives a formatted value e.g. $20,000,000
@@ -864,7 +859,7 @@ Ember.Table.TableCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin
   styleBindings: 'width',
   row: Ember.computed.alias('parentView.row'),
   column: Ember.computed.alias('content'),
-  width: Ember.computed.alias('column.columnWidth'),
+  width: Ember.computed.alias('column.width'),
   init: function() {
     this._super();
     this.contentPathDidChange();
@@ -1014,7 +1009,7 @@ Ember.Table.HeaderCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixi
   classNameBindings: ['column.isSortable:sortable', 'column.textAlign'],
   styleBindings: ['width', 'height'],
   column: Ember.computed.alias('content'),
-  width: Ember.computed.alias('column.columnWidth'),
+  width: Ember.computed.alias('column.width'),
   height: Ember.computed(function() {
     return this.get('controller._headerHeight');
   }).property('controller._headerHeight'),
@@ -1056,9 +1051,6 @@ Ember.Table.HeaderCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixi
   */
 
   onColumnResize: function(event, ui) {
-    if (this.get('controller.forceFillColumns') && this.get('controller.columns').filterProperty('canAutoResize').length > 1) {
-      this.set('column.canAutoResize', false);
-    }
     this.get('column').resize(ui.size.width);
     this.set('controller.columnsFillTable', false);
     this.elementSizeDidChange();
@@ -1391,21 +1383,6 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
     this.prepareTableColumns(columns);
     return columns;
   }).property('columns.@each', 'numFixedColumns'),
-  /**
-  * Amount of width that could be filled by auto-resizing columns. Could be
-  * negative if the table is too wide and scrolls horizontally.
-  * @memberof Ember.Table.EmberTableComponent
-  * @instance
-  * @todo Much more doc needed
-  */
-
-  availableWidth: Ember.computed(function() {
-    var allColumns, unresizableColumns, unresizableWidth;
-    allColumns = this.get('tableColumns').concat(this.get('fixedColumns'));
-    unresizableColumns = allColumns.filterProperty('canAutoResize', false);
-    unresizableWidth = this._getTotalWidth(unresizableColumns);
-    return this.get('_width') - unresizableWidth;
-  }).property('_width', 'fixedColumns.[]', 'fixedColumns.@each.canAutoResize', 'tableColumns.[]', 'tableColumns.@each.canAutoResize'),
   prepareTableColumns: function(columns) {
     return columns.setEach('controller', this);
   },
@@ -1466,40 +1443,38 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
       return this.doForceFillColumns();
     }
   },
-  resizeColumns: function(columnsToResize) {
-    var availableWidth, doNextLoop, nextColumnsToResize, totalSavedWidth, _results,
+  doForceFillColumns: function() {
+    var allColumns, availableWidth, columnsToResize, doNextLoop, nextColumnsToResize, totalResizableWidth, unresizableColumns, _results,
       _this = this;
-    availableWidth = this.get('availableWidth');
+    allColumns = this.get('tableColumns').concat(this.get('fixedColumns'));
+    columnsToResize = allColumns.filterProperty('canAutoResize');
+    unresizableColumns = allColumns.filterProperty('canAutoResize', false);
+    availableWidth = this.get('_width') - this._getTotalWidth(unresizableColumns);
     doNextLoop = true;
     _results = [];
     while (doNextLoop) {
       doNextLoop = false;
       nextColumnsToResize = [];
-      totalSavedWidth = this._getTotalWidth(columnsToResize, 'savedWidth');
+      totalResizableWidth = this._getTotalWidth(columnsToResize);
       columnsToResize.forEach(function(column) {
-        var newColumnWidth;
-        newColumnWidth = Math.floor((column.get('savedWidth') / totalSavedWidth) * availableWidth);
-        if (newColumnWidth < column.get('minWidth')) {
+        var newWidth;
+        newWidth = Math.floor((column.get('width') / totalResizableWidth) * availableWidth);
+        if (newWidth < column.get('minWidth')) {
           doNextLoop = true;
-          column.set('columnWidth', column.get('minWidth'));
-          return availableWidth -= column.get('columnWidth');
-        } else if (newColumnWidth > column.get('maxWidth')) {
+          column.set('width', column.get('minWidth'));
+          return availableWidth -= column.get('width');
+        } else if (newWidth > column.get('maxWidth')) {
           doNextLoop = true;
-          column.set('columnWidth', column.get('maxWidth'));
-          return availableWidth -= column.get('columnWidth');
+          column.set('width', column.get('maxWidth'));
+          return availableWidth -= column.get('width');
         } else {
-          column.set('columnWidth', newColumnWidth);
+          column.set('width', newWidth);
           return nextColumnsToResize.pushObject(column);
         }
       });
       _results.push(columnsToResize = nextColumnsToResize);
     }
     return _results;
-  },
-  doForceFillColumns: function() {
-    var columnsToResize;
-    columnsToResize = this.get('tableColumns').concat(this.get('fixedColumns')).filterProperty('canAutoResize');
-    return this.resizeColumns(columnsToResize);
   },
   onBodyContentLengthDidChange: Ember.observer(function() {
     return Ember.run.next(this, function() {
@@ -1550,7 +1525,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
 
   _fixedColumnsWidth: Ember.computed(function() {
     return this._getTotalWidth(this.get('fixedColumns'));
-  }).property('fixedColumns.@each.columnWidth'),
+  }).property('fixedColumns.@each.width'),
   /**
   * Actual width of the table columns (non-frozen columns)
   * @memberof Ember.Table.EmberTableComponent
@@ -1567,7 +1542,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
     } else {
       return availableWidth;
     }
-  }).property('tableColumns.@each.columnWidth', '_width', '_fixedColumnsWidth'),
+  }).property('tableColumns.@each.width', '_width', '_fixedColumnsWidth'),
   /**
   * Computed Row Width
   * @memberof Ember.Table.EmberTableComponent
@@ -1704,7 +1679,7 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
   _getTotalWidth: function(columns, columnWidthPath) {
     var widths;
     if (columnWidthPath == null) {
-      columnWidthPath = 'columnWidth';
+      columnWidthPath = 'width';
     }
     if (!columns) {
       return 0;
