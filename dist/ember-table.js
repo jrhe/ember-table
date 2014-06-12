@@ -681,6 +681,9 @@ Ember.Table.Row = Ember.ObjectProxy.extend({
   */
 
   content: null,
+  isLast: Ember.computed(function() {
+    return this.get('parentController.lastRow') === this;
+  }).property('parentController.lastRow'),
   /**
   * Is Selected?
   * @memberof Ember.Table.Row
@@ -798,9 +801,7 @@ Ember.Table.TableRow = Ember.LazyItemView.extend({
   columns: Ember.computed.alias('parentView.columns'),
   width: Ember.computed.alias('controller._rowWidth'),
   height: Ember.computed.alias('controller.rowHeight'),
-  isLastRow: Ember.computed(function() {
-    return this.get('row') === this.get('controller.bodyContent.lastObject');
-  }).property('controller.bodyContent.lastObject', 'row'),
+  isLastRow: Ember.computed.alias('row.isLast'),
   /**
   * Mouse enter callback
   * @memberof Ember.Table.TableRow
@@ -1438,6 +1439,11 @@ Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.Sty
       return column.set('columnWidth', columnWidth);
     });
   },
+  lastRow: Ember.computed(function() {
+    var lastControllerPos;
+    lastControllerPos = this.get('bodyContent.length') - 1;
+    return this.get('bodyContent').controllerAt(lastControllerPos);
+  }).property('bodyContent', 'bodyContent.[]'),
   onBodyContentLengthDidChange: Ember.observer(function() {
     return Ember.run.next(this, function() {
       return Ember.run.once(this, this.updateLayout);
