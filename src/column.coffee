@@ -67,6 +67,10 @@ Ember.Table.Row = Ember.ObjectProxy.extend
   ###
   content: null
 
+  isLast: Ember.computed ->
+    @get('parentController.lastRow') is this
+  .property 'parentController.lastRow'
+
   ###*
   * Is Selected?
   * @memberof Ember.Table.Row
