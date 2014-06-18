@@ -6,6 +6,6 @@
 
   App.data.empty = [];
 
-  require('build/app/data/ember_table/treedata');
+  require('app/data/ember_table/treedata');
 
 }).call(this);
