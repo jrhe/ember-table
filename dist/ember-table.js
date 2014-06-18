@@ -13,7 +13,7 @@
 })();
 (function() {
 
-Ember.TEMPLATES["body-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/body-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
@@ -45,7 +45,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["components/ember-table"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/components/ember-table"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
@@ -84,7 +84,7 @@ function program3(depth0,data) {
   
 });
 
-Ember.TEMPLATES["footer-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/footer-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
@@ -112,7 +112,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["header-cell"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/header-cell"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, escapeExpression=this.escapeExpression;
@@ -128,7 +128,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["header-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/header-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
@@ -154,7 +154,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["header-row"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/header-row"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
@@ -170,7 +170,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["scroll-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/scroll-container"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
@@ -183,7 +183,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["table-cell"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/table-cell"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1;
@@ -197,7 +197,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 });
 
-Ember.TEMPLATES["table-row"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+Ember.TEMPLATES["-ember-table/table-row"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', escapeExpression=this.escapeExpression;
@@ -816,7 +816,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.TableRow = Ember.LazyItemView.extend({
-    templateName: 'table-row',
+    templateName: '-ember-table/table-row',
     classNames: 'ember-table-table-row',
     classNameBindings: ['row.isHovered:ember-table-hover', 'row.isSelected:ember-table-selected', 'row.rowStyle', 'isLastRow:ember-table-last-row'],
     styleBindings: ['width', 'height'],
@@ -879,7 +879,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.TableCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin, {
-    templateName: 'table-cell',
+    templateName: '-ember-table/table-cell',
     classNames: ['ember-table-cell'],
     classNameBindings: 'column.textAlign',
     styleBindings: 'width',
@@ -961,7 +961,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.HeaderRow = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin, {
-    templateName: 'header-row',
+    templateName: '-ember-table/header-row',
     classNames: ['ember-table-table-row', 'ember-table-header-row'],
     styleBindings: ['width'],
     columns: Ember.computed.alias('content'),
@@ -1030,7 +1030,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.HeaderCell = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin, {
-    templateName: 'header-cell',
+    templateName: '-ember-table/header-cell',
     classNames: ['ember-table-cell', 'ember-table-header-cell'],
     classNameBindings: ['column.isSortable:sortable', 'column.textAlign'],
     styleBindings: ['width', 'height'],
@@ -1116,7 +1116,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.HeaderTableContainer = Ember.Table.TableContainer.extend(Ember.Table.ShowHorizontalScrollMixin, {
-    templateName: 'header-container',
+    templateName: '-ember-table/header-container',
     classNames: ['ember-table-table-container', 'ember-table-fixed-table-container', 'ember-table-header-container'],
     height: Ember.computed.alias('controller._headerHeight'),
     width: Ember.computed.alias('controller._tableContainerWidth')
@@ -1133,7 +1133,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.BodyTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWheelHandlerMixin, Ember.TouchMoveHandlerMixin, Ember.ScrollHandlerMixin, Ember.Table.ShowHorizontalScrollMixin, {
-    templateName: 'body-container',
+    templateName: '-ember-table/body-container',
     classNames: ['ember-table-table-container', 'ember-table-body-container', 'antiscroll-wrap'],
     height: Ember.computed.alias('controller._bodyHeight'),
     width: Ember.computed.alias('controller._width'),
@@ -1200,7 +1200,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.FooterTableContainer = Ember.Table.TableContainer.extend(Ember.MouseWheelHandlerMixin, Ember.TouchMoveHandlerMixin, Ember.Table.ShowHorizontalScrollMixin, {
-    templateName: 'footer-container',
+    templateName: '-ember-table/footer-container',
     classNames: ['ember-table-table-container', 'ember-table-fixed-table-container', 'ember-table-footer-container'],
     styleBindings: 'top',
     height: Ember.computed.alias('controller.footerHeight'),
@@ -1241,7 +1241,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
    */
 
   Ember.Table.ScrollContainer = Ember.View.extend(Ember.AddeparMixins.StyleBindingsMixin, Ember.ScrollHandlerMixin, {
-    templateName: 'scroll-container',
+    templateName: '-ember-table/scroll-container',
     classNames: ['ember-table-scroll-container'],
     styleBindings: ['left', 'width', 'height'],
     scrollElementSelector: '.antiscroll-inner',
@@ -1309,7 +1309,7 @@ jQuery.browser shim that makes HT working with jQuery 1.8+
 
 (function() {
   Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.StyleBindingsMixin, Ember.AddeparMixins.ResizeHandlerMixin, {
-    layoutName: 'components/ember-table',
+    layoutName: '-ember-table/components/ember-table',
     classNames: ['ember-table-tables-container'],
     classNameBindings: ['enableContentSelection:ember-table-content-selectable'],
     styleBindings: ['height'],
