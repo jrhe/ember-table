@@ -8,7 +8,7 @@
 
 (function() {
   Ember.Table.EmberTableComponent = Ember.Component.extend(Ember.AddeparMixins.StyleBindingsMixin, Ember.AddeparMixins.ResizeHandlerMixin, {
-    layoutName: 'components/ember-table',
+    layoutName: '-ember-table/components/ember-table',
     classNames: ['ember-table-tables-container'],
     classNameBindings: ['enableContentSelection:ember-table-content-selectable'],
     styleBindings: ['height'],
