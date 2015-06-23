@@ -181,7 +181,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     columns.removeObject(column);
     columns.insertAt(numFixedColumns + newIndex, column);
     this.prepareTableColumns();
-    this.sendAction('onColumnSort', columns);
+    this.sendAction('columnsReordered', columns);
   },
 
   // An array of Ember.Table.Row computed based on `content`
